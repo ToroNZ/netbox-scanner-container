@@ -5,11 +5,9 @@ ENV NBSDIR=$NBSHOME/netbox-scanner-master
 
 RUN adduser -D netbox -G root \
     && apk add --no-cache --update \
-    nmap \
-    curl \
-    unzip
+    nmap
 
-RUN apk add --no-cache --update --virtual build-dependencies python3-dev openssl-dev libffi-dev gcc musl-dev make \
+RUN apk add --no-cache --update --virtual build-dependencies python3-dev openssl-dev libffi-dev gcc musl-dev make unzip curl \
     && pip install --upgrade pip \
     && curl -LO https://github.com/forkd/netbox-scanner/archive/master.zip \
     && unzip master.zip -d $NBSHOME \
