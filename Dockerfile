@@ -9,7 +9,7 @@ RUN adduser -D netbox -G root \
 
 RUN apk add --no-cache --update --virtual build-dependencies python3-dev openssl-dev libffi-dev gcc musl-dev make curl \
     && pip install --upgrade pip \
-    && curl -Lo master.tar.gz https://github.com/mikeb93/netbox-scanner/archive/feature/dns-vrf-addition.tar.gz \
+    && curl -Lo master.tar.gz https://github.com/ToroNZ/netbox-scanner/archive/feature/dns-vrf-addition.tar.gz \
     && mkdir -p $NBSDIR \
     && tar xf master.tar.gz --directory $NBSDIR --strip 1 \
     && rm master.tar.gz \
