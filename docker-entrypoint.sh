@@ -7,4 +7,4 @@ if [ "$(id -u)" -ne 1000 ]; then
     export HOME=/home/netbox
 fi
 
-python netbox-scanner/nbscanner
+python netbox-scanner/nbscanner -p

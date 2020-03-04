@@ -7,13 +7,13 @@ RUN adduser -D netbox -G root \
     && apk add --no-cache --update \
     nmap
 
-RUN apk add --no-cache --update --virtual build-dependencies python3-dev openssl-dev libffi-dev gcc musl-dev make unzip curl \
+RUN apk add --no-cache --update --virtual build-dependencies python3-dev openssl-dev libffi-dev gcc musl-dev make curl \
     && pip install --upgrade pip \
-    && curl -LO https://github.com/forkd/netbox-scanner/archive/master.zip \
-    && unzip master.zip -d $NBSHOME \
-    && rm master.zip \
-    && cd $NBSDIR \
-    && pip install -r requirements.txt \
+    && curl -Lo master.tar.gz https://github.com/mikeb93/netbox-scanner/archive/feature/dns-vrf-addition.tar.gz \
+    && mkdir -p $NBSDIR \
+    && tar xf master.tar.gz --directory $NBSDIR --strip 1 \
+    && rm master.tar.gz \
+    && pip install -r $NBSDIR/requirements.txt \
     && apk del build-dependencies \
     && chgrp -R 0 $NBSHOME \
     && chmod -R g=u $NBSHOME \
