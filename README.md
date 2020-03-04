@@ -16,10 +16,12 @@ If your running it for the first time, create a sample config file:
 
 ```docker run --rm -ti --user 1000320000 --cap-drop=all -v `pwd`:/root toronz/netbox-scanner-docker:latest```
 
-This will drop a hidden file under your current directory. After the config is set, you can mounted it as follow:
+This will drop a hidden file under your current directory. After the config is set, you can mount it as follows:
 
 ```docker run --rm -ti --user 1000320000 --cap-drop=all -v `pwd`/.netbox-scanner.conf:/root/.netbox-scanner.conf toronz/netbox-scanner-docker:latest```
 
 ## OS Recognition
 
-If you want to use the nmap flag "-O" you need to build this container using a prviliged user (root/sudo or whatever hack-of-choice) to create raw sockets.
+Won't work due to the lack of permissions of this image (rootless).
+
+If you want to use the nmap flag "-O" (OS recon), you need to build this container using a privileged user (root/sudo) so nmap can create raw sockets.
