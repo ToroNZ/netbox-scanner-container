@@ -14,11 +14,35 @@ docker build -t toronz/nebox-scanner-docker:latest .
 
 If your running it for the first time, create a sample config file:
 
-```docker run --rm -ti --user 1000320000 --cap-drop=all -v `pwd`:/root toronz/netbox-scanner-docker:latest```
+```
+tee `pwd`/.netbox-scanner.conf <<EOF
+[GENERAL]
+tag       = auto
+vrf       = 
+unknown   = unknown host
+log       = .
+nmap_args = -T4 -F -R --host-timeout 30s
 
-This will drop a hidden file under your current directory. After the config is set, you can mount it as follows:
+[NETBOX]
+address = http://netbox:8001
+token = YOUR_TOKEN_HERE
+tls_verify = False
 
-```docker run --rm -ti --user 1000320000 --cap-drop=all -v `pwd`/.netbox-scanner.conf:/root/.netbox-scanner.conf toronz/netbox-scanner-docker:latest```
+[TACACS]
+user     = netbox
+password = 
+command  = show run | inc hostname
+regex    = hostname ([A-Z|a-z|0-9|\-|_]+)
+regroup  = 1
+
+[SCAN]
+networks = 192.168.21.0/26,10.0.1.0/24
+EOF
+```
+
+After the config is set, you can mount it as follows:
+
+```docker run --rm -ti --user 1000320000 --cap-drop=all -v `pwd`/.netbox-scanner.conf:/home/netbox/.netbox-scanner.conf toronz/netbox-scanner-docker:latest```
 
 ## OS Recognition
 
